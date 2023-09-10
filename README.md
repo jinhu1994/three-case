@@ -1,1 +1,1 @@
-Vue3 + ts + Vite + threeJs
+学习 THREE.js

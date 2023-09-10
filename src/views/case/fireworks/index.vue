@@ -1,10 +1,12 @@
 <template>
     <div ref="fireworksEle" class="example-wrapper">
         <logo :label="'烟花'"></logo>
+        <loading v-if="percent < 100"></loading>
     </div>
 </template>
 <script lang="ts" setup>
 import logo from '@/components/logo.vue';
+import loading from '@/components/loading.vue';
 import * as THREE from 'three';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -16,6 +18,7 @@ import { getStaticResourceUrl } from '@/utils/common';
 import Fireworks from './fireworks';
 
 const fireworksEle = ref<HTMLElement | null>(null)
+const percent = ref(0)
 //  创建的烟花集合
 const fireworksArr = ref<Fireworks[]>([]);
 
@@ -28,15 +31,36 @@ const init = () => {
         const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
         camera.position.set(-48, 20, 8)
 
+        const event = {
+            onLoad: function () {
+                console.log('Loading complete!');
+            },
+            onProgress: function (url: string, loaded: number, total: number) {
+                percent.value = parseInt(((loaded / total) * 100).toFixed(0));
+            },
+            onError: function (url: string) {
+                console.log('There was an error loading ' + url);
+            },
+        };
+
+        // 设置纹理加载器
+        const loadingmanager = new THREE.LoadingManager(
+            event.onLoad,
+            event.onProgress,
+            event.onError
+        );
+
         // 加载环境贴图
-        new RGBELoader().loadAsync(getStaticResourceUrl('2k.hdr', '/src/assets/images/lantern/')).then((texture) => {
+        const rgbeloader = new RGBELoader(loadingmanager);
+        rgbeloader.loadAsync(getStaticResourceUrl('2k.hdr', '/src/assets/images/lantern/')).then((texture) => {
             texture.mapping = THREE.EquirectangularReflectionMapping;
             scene.background = texture;
             scene.environment = texture;
         });
 
         // 加载gltf模型
-        new GLTFLoader().loadAsync(getStaticResourceUrl('newyears_min.glb', '/src/assets/model/')).then((glft) => {
+        const glftLoader = new GLTFLoader(loadingmanager);
+        glftLoader.loadAsync(getStaticResourceUrl('newyears_min.glb', '/src/assets/model/')).then((glft) => {
             scene.add(glft.scene)
 
             // 创建水面

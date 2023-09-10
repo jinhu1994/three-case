@@ -1,10 +1,12 @@
 <template>
     <div ref="lanternShader" class="example-wrapper">
         <logo :label="'孔明灯'"></logo>
+        <loading v-if="percent < 100" :percent="60"></loading>
     </div>
 </template>
 <script lang="ts" setup>
 import logo from '@/components/logo.vue';
+import loading from '@/components/loading.vue';
 import gsap from "gsap";
 import { getSize, initRenderer } from '@/utils/three';
 import * as THREE from 'three';
@@ -17,6 +19,7 @@ import vertexShader from '@/assets/shader/lantern/vertex.glsl?raw';
 import fragmentShader from '@/assets/shader/lantern/fragment.glsl?raw';
 
 const lanternShader = ref<HTMLElement | null>(null);
+const percent = ref(0)
 
 const init = () => {
     const dom = lanternShader.value;
@@ -41,8 +44,26 @@ const init = () => {
             side: THREE.DoubleSide,
         })
 
+        const event = {
+            onLoad: function () {
+                console.log('Loading complete!');
+            },
+            onProgress: function (url: string, loaded: number, total: number) {
+                percent.value = parseInt(((loaded / total) * 100).toFixed(0));
+            },
+            onError: function (url: string) {
+                console.log('There was an error loading ' + url);
+            },
+        };
+        // 设置纹理加载器
+        const loadingmanager = new THREE.LoadingManager(
+            event.onLoad,
+            event.onProgress,
+            event.onError
+        );
+
         // 加载灯笼的物理模型
-        const gltfLoader = new GLTFLoader();
+        const gltfLoader = new GLTFLoader(loadingmanager);
         gltfLoader.loadAsync(getStaticResourceUrl('lantern.glb', '/src/assets/model/')).then((gltf: any) => {
             const lanternBox = gltf.scene.children[1];
             lanternBox.material = shaderMaterial;
