@@ -32,6 +32,7 @@ router.options.routes.forEach((x: RouteRecordRaw, i: number) => {
 .home-wrapper {
     width: 100%;
     height: 100%;
+    overflow-y: auto;
 
     h2 {
         margin: 20px 0;
@@ -69,6 +70,10 @@ router.options.routes.forEach((x: RouteRecordRaw, i: number) => {
                 li {
                     height: 20px;
                     line-height: 20px;
+
+                    a {
+                        text-decoration: none;
+                    }
                 }
             }
         }

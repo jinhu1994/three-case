@@ -86,7 +86,29 @@ const routes: Array<RouteRecordRaw> = [
                 meta: { title: '烟花' }
             }
         ]
-    }
+    },
+    {
+        path: '/shaderMaterial',
+        meta: { title: '着色器加工材质' },
+        children: [
+            {
+                path: 'process',
+                component: () => import('@/views/materialProcess/process/index.vue'),
+                meta: { title: '材质加工' }
+            }
+        ]
+    },
+    {
+        path: '/effect',
+        meta: { title: '效果合成与后期处理' },
+        children: [
+            {
+                path: 'shaderEffect',
+                component: () => import('@/views/effect/shaderEffect/index.vue'),
+                meta: { title: 'shaderPass' }
+            }
+        ]
+    },
 ];
 
 const router = createRouter({

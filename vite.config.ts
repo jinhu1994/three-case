@@ -16,6 +16,7 @@ export default defineConfig({
         outDir: 'dist',
         assetsDir: 'assets', //指定静态资源存放路径
         sourcemap: false, //是否构建source map 文件
+        minify: 'terser',
         chunkSizeWarningLimit: 1500, //chunk 大小警告的限制，默认500KB
         rollupOptions: {
             //  指定打包输出的js文件名称
@@ -34,3 +35,4 @@ export default defineConfig({
         },
     },
 });
+

@@ -7,7 +7,7 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite --force --host",
+        "start": "vite --force --host",
         "build": "vue-tsc --noEmit --skipLibCheck && vite build",
         "preview": "vite preview",
         "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",

@@ -88,10 +88,6 @@ const init = () => {
 
         // 设置gui
         const gui = new GUI();
-        dom.appendChild(gui.domElement);
-        gui.domElement.style.position = 'absolute';
-        gui.domElement.style.top = '0';
-        gui.domElement.style.right = '10px';
 
         Object.keys(params).forEach(x => {
             Object.keys(guiConfig).forEach(key => {
