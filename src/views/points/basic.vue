@@ -34,7 +34,7 @@ const init = () => {
         });
 
         const points = new THREE.Points(sphereGeometry, pointMaterial);
-        points.clear()
+        points.clear();
         scene.add(points);
 
         const renderer = initRenderer(sizes.width, sizes.height);

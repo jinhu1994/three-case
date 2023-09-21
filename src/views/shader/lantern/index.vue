@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import logo from '@/components/logo.vue';
 import loading from '@/components/loading.vue';
-import gsap from "gsap";
+import gsap from 'gsap';
 import { getSize, initRenderer } from '@/utils/three';
 import * as THREE from 'three';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
@@ -19,7 +19,7 @@ import vertexShader from '@/assets/shader/lantern/vertex.glsl?raw';
 import fragmentShader from '@/assets/shader/lantern/fragment.glsl?raw';
 
 const lanternShader = ref<HTMLElement | null>(null);
-const percent = ref(0)
+const percent = ref(0);
 
 const init = () => {
     const dom = lanternShader.value;
@@ -28,7 +28,7 @@ const init = () => {
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-        camera.position.set(0, 0, 2)
+        camera.position.set(0, 0, 2);
 
         // 加载环境贴图
         new RGBELoader().loadAsync(getStaticResourceUrl('2k.hdr', '/src/assets/images/lantern/')).then((texture) => {
@@ -42,7 +42,7 @@ const init = () => {
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             side: THREE.DoubleSide,
-        })
+        });
 
         const event = {
             onLoad: function () {
@@ -56,11 +56,7 @@ const init = () => {
             },
         };
         // 设置纹理加载器
-        const loadingmanager = new THREE.LoadingManager(
-            event.onLoad,
-            event.onProgress,
-            event.onError
-        );
+        const loadingmanager = new THREE.LoadingManager(event.onLoad, event.onProgress, event.onError);
 
         // 加载灯笼的物理模型
         const gltfLoader = new GLTFLoader(loadingmanager);
@@ -69,7 +65,7 @@ const init = () => {
             lanternBox.material = shaderMaterial;
 
             for (let i = 0; i < 200; i++) {
-                let lantern = gltf.scene.clone(true)
+                let lantern = gltf.scene.clone(true);
                 let x = (Math.random() - 0.5) * 300;
                 let z = (Math.random() - 0.5) * 300;
                 let y = Math.random() * 60 + 25;
@@ -77,20 +73,18 @@ const init = () => {
                 gsap.to(lantern.rotation, {
                     y: Math.PI * 2,
                     duration: 10 + Math.random() * 30,
-                    repeat: -1
-
-                })
+                    repeat: -1,
+                });
                 gsap.to(lantern.position, {
-                    x: "+=" + Math.random() * 5,
-                    y: "+=" + Math.random() * 20,
+                    x: '+=' + Math.random() * 5,
+                    y: '+=' + Math.random() * 20,
                     yoyo: true,
                     duration: 5 + Math.random() * 10,
                     repeat: -1,
                 });
-                scene.add(lantern)
+                scene.add(lantern);
             }
-        })
-
+        });
 
         const renderer = initRenderer(sizes.width, sizes.height);
         renderer.outputEncoding = THREE.sRGBEncoding;
@@ -112,14 +106,14 @@ const init = () => {
         const animate = () => {
             controls.update();
             renderer.render(scene, camera);
-            requestAnimationFrame(animate)
-        }
+            requestAnimationFrame(animate);
+        };
         animate();
     }
-}
+};
 
 onMounted(() => {
     init();
-})
+});
 </script>
 <style lang="less" scoped></style>

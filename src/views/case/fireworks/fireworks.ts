@@ -167,7 +167,7 @@ export default class FireWorks {
             if (!this.launchSound.isPlaying && !this.play) {
                 this.launchSound.play();
                 this.play = true;
-              }
+            }
 
             // 烟花开始爆炸
             const time = elapsedTime - 1;

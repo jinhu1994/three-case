@@ -9,8 +9,7 @@ import { getSize, initRenderer } from '@/utils/three';
 import vertexShader from './vertex.glsl?raw';
 import fragmentShader from './fragment.glsl?raw';
 
-
-const basicShader = ref<HTMLElement | null>(null)
+const basicShader = ref<HTMLElement | null>(null);
 
 const init = () => {
     const dom = basicShader.value;
@@ -22,17 +21,13 @@ const init = () => {
         camera.position.set(0, 0, 5);
         scene.add(camera);
 
-        // 
+        //
         const shaderMaterial = new THREE.ShaderMaterial({
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
-            side: THREE.DoubleSide
-        })
-        const floor = new THREE.Mesh(
-            new THREE.PlaneBufferGeometry(1, 1, 32, 32),
-            shaderMaterial,
-
-        );
+            side: THREE.DoubleSide,
+        });
+        const floor = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1, 32, 32), shaderMaterial);
         scene.add(floor);
 
         const renderer = initRenderer(sizes.width, sizes.height);
@@ -54,10 +49,10 @@ const init = () => {
 
         animate();
     }
-}
+};
 
 onMounted(() => {
     init();
-})
+});
 </script>
 <style lang="less" scoped></style>

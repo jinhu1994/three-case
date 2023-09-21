@@ -70,7 +70,7 @@ const onPointerMove = (event: MouseEvent) => {
 
         if (intersects.length) {
             const intersect = intersects[0];
-            const vec3 = intersect.face?.normal || new THREE.Vector3()
+            const vec3 = intersect.face?.normal || new THREE.Vector3();
             initData.rollOverMesh.position.copy(intersect.point).add(vec3);
             initData.rollOverMesh.position.divideScalar(50).floor().multiplyScalar(50).addScalar(2);
             render();
@@ -172,8 +172,8 @@ const init = () => {
         initData.renderer = initRenderer(initData.size.width, initData.size.height);
         dom.appendChild(initData.renderer.domElement);
 
-        const helper = new THREE.AxesHelper(1000)
-        initData.scene.add(helper)
+        const helper = new THREE.AxesHelper(1000);
+        initData.scene.add(helper);
 
         document.addEventListener('mousemove', onPointerMove);
         document.addEventListener('mousedown', onPointerDown);

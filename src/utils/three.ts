@@ -18,7 +18,6 @@ const initRenderer = (width: number, height: number): THREE.WebGLRenderer => {
     return renderer;
 };
 
-const initLilGui = (controls: Record<string, any>,guiConfig: Record<string, GuiParams>) => {}
-
+const initLilGui = (controls: Record<string, any>, guiConfig: Record<string, GuiParams>) => {};
 
 export { getSize, initRenderer, initLilGui };

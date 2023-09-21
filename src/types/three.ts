@@ -6,12 +6,12 @@ export interface Size {
 export enum AttrType {
     Color,
     Number,
-    Boolean
+    Boolean,
 }
 
 export interface GuiParams {
-    type: AttrType,
+    type: AttrType;
     min: number;
     max: number;
-    step: number
+    step: number;
 }

@@ -4,18 +4,17 @@
 <script lang="ts" setup>
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // 导入后期效果合成器
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/Shaderpass'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/Shaderpass';
 
 import GUI from 'lil-gui';
 import { onMounted, ref } from 'vue';
 import { getSize, initRenderer } from '@/utils/three';
-import { getStaticResourceUrl } from '@/utils/common'
-import { TextureLoader } from 'three';
+import { getStaticResourceUrl } from '@/utils/common';
 
 const shaderEffect = ref<HTMLElement | null>();
 
@@ -27,10 +26,8 @@ const resourceUrls = [
     { name: 'pz', url: getStaticResourceUrl('pz.jpg', '/src/assets/texture/environmentMaps/0/') },
     { name: 'nz', url: getStaticResourceUrl('nz.jpg', '/src/assets/texture/environmentMaps/0/') },
     { name: 'model', url: getStaticResourceUrl('DamagedHelmet.gltf', '/src/assets/model/DamagedHelmet/glTF/') },
-    { name: 'normalMap', url: getStaticResourceUrl('interfaceNormalMap.png', '/src/assets/texture/') }
-
-]
-
+    { name: 'normalMap', url: getStaticResourceUrl('interfaceNormalMap.png', '/src/assets/texture/') },
+];
 
 const init = () => {
     const dom = shaderEffect.value;
@@ -43,14 +40,14 @@ const init = () => {
         camera.position.set(0, 0, 3);
 
         const cubeTextureLoader = new THREE.CubeTextureLoader();
-        const envTextureMap = cubeTextureLoader.load(resourceUrls.slice(0, 6).map(o => o.url));
+        const envTextureMap = cubeTextureLoader.load(resourceUrls.slice(0, 6).map((o) => o.url));
         scene.background = envTextureMap;
         scene.environment = envTextureMap;
 
         const gltfLoader = new GLTFLoader();
         gltfLoader.load(resourceUrls[6].url, (gltf) => {
-            scene.add(gltf.scene.children[0])
-        })
+            scene.add(gltf.scene.children[0]);
+        });
 
         const renderer = initRenderer(sizes.width, sizes.height);
         dom.appendChild(renderer.domElement);
@@ -61,23 +58,23 @@ const init = () => {
 
         // 添加渲染通道
         const renderPass = new RenderPass(scene, camera);
-        effectComposer.addPass(renderPass)
+        effectComposer.addPass(renderPass);
 
         const colorParams = {
             r: 0,
             g: 0,
-            b: 0
-        }
+            b: 0,
+        };
         // 着色器渲染通道
         const shaderPass = new ShaderPass({
             uniforms: {
                 // 当前图像纹理，自带的，但是在这里必须声明
                 tDiffuse: {
-                    value: null
+                    value: null,
                 },
                 uColor: {
-                    value: new THREE.Color(colorParams.r, colorParams.g, colorParams.b)
-                }
+                    value: new THREE.Color(colorParams.r, colorParams.g, colorParams.b),
+                },
             },
             vertexShader: `
                 varying vec2 vUv;
@@ -95,22 +92,36 @@ const init = () => {
                     color.xyz += uColor;
                     gl_FragColor = color;
                 }
-            `
-        })
+            `,
+        });
         effectComposer.addPass(shaderPass);
 
-        const gui = new GUI()
+        const gui = new GUI();
         const colorFolder = gui.addFolder('颜色设置');
-        colorFolder.add(colorParams, 'r').min(0).max(1).step(0.01).onChange((val: number) => {
-            shaderPass.uniforms.uColor.value.r = val;
-        })
-        colorFolder.add(colorParams, 'g').min(0).max(1).step(0.01).onChange((val: number) => {
-            shaderPass.uniforms.uColor.value.g = val;
-        })
-        colorFolder.add(colorParams, 'b').min(0).max(1).step(0.01).onChange((val: number) => {
-            shaderPass.uniforms.uColor.value.b = val;
-        })
-
+        colorFolder
+            .add(colorParams, 'r')
+            .min(0)
+            .max(1)
+            .step(0.01)
+            .onChange((val: number) => {
+                shaderPass.uniforms.uColor.value.r = val;
+            });
+        colorFolder
+            .add(colorParams, 'g')
+            .min(0)
+            .max(1)
+            .step(0.01)
+            .onChange((val: number) => {
+                shaderPass.uniforms.uColor.value.g = val;
+            });
+        colorFolder
+            .add(colorParams, 'b')
+            .min(0)
+            .max(1)
+            .step(0.01)
+            .onChange((val: number) => {
+                shaderPass.uniforms.uColor.value.b = val;
+            });
 
         // 创建纹理加载器对象
         const textureLoader = new THREE.TextureLoader();
@@ -120,14 +131,14 @@ const init = () => {
         const wavePass = new ShaderPass({
             uniforms: {
                 tDiffuse: {
-                    value: null
+                    value: null,
                 },
                 uNormalMap: {
-                    value: null
+                    value: null,
                 },
                 uTime: {
-                    value: 0
-                }
+                    value: 0,
+                },
             },
             vertexShader: `
                 varying vec2 vUv;
@@ -156,8 +167,8 @@ const init = () => {
                     gl_FragColor = color;
 
                 }
-            `
-        })
+            `,
+        });
 
         wavePass.material.uniforms.uNormalMap.value = normalTexture;
         effectComposer.addPass(wavePass);
@@ -167,17 +178,16 @@ const init = () => {
         const animate = () => {
             const time = clock.getElapsedTime();
             wavePass.material.uniforms.uTime.value = time;
-            effectComposer.render()
-            requestAnimationFrame(animate)
-        }
+            effectComposer.render();
+            requestAnimationFrame(animate);
+        };
 
         animate();
     }
-}
+};
 
 onMounted(() => {
     init();
-})
-
+});
 </script>
 <style lang="less" scoped></style>

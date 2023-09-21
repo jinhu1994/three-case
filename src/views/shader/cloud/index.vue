@@ -23,7 +23,7 @@ const init = () => {
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-        camera.position.set(1, 1, 1)
+        camera.position.set(1, 1, 1);
 
         const params: Record<string, any> = {
             uWaresFrequency: 14, // 波浪的峰值
@@ -37,7 +37,7 @@ const init = () => {
             uZspeed: 1,
             uNoiseSpeed: 1,
             uOpacity: 0.4,
-        }
+        };
 
         const guiConfig: Record<string, GuiParams> = {
             uWaresFrequency: { type: AttrType.Number, min: 1, max: 100, step: 0.1 },
@@ -51,7 +51,7 @@ const init = () => {
             uZspeed: { type: AttrType.Number, min: 0, max: 5, step: 0.001 },
             uNoiseSpeed: { type: AttrType.Number, min: 0, max: 5, step: 0.001 },
             uOpacity: { type: AttrType.Number, min: 0, max: 1, step: 0.01 },
-        }
+        };
 
         // 预设shader材质
         const shaderMaterial = new THREE.ShaderMaterial({
@@ -61,9 +61,9 @@ const init = () => {
             transparent: true,
             uniforms: {
                 uTime: {
-                    value: 0
-                }
-            }
+                    value: 0,
+                },
+            },
         });
 
         // 设置着色器 uniforms
@@ -72,51 +72,45 @@ const init = () => {
             switch (typeof value) {
                 case 'number':
                     shaderMaterial.uniforms[key] = {
-                        value: value
-                    }
+                        value: value,
+                    };
                     break;
                 case 'string':
                     shaderMaterial.uniforms[key] = {
-                        value: new THREE.Color(value)
-                    }
+                        value: new THREE.Color(value),
+                    };
                     break;
                 default:
                     break;
             }
-
-        })
+        });
 
         // 设置gui
         const gui = new GUI();
 
-        Object.keys(params).forEach(x => {
-            Object.keys(guiConfig).forEach(key => {
+        Object.keys(params).forEach((x) => {
+            Object.keys(guiConfig).forEach((key) => {
                 if (x === key) {
                     const config = guiConfig[key];
                     if (config.type === AttrType.Number) {
                         gui.add(params, x, config.min, config.max, config.step).onChange((val: number) => {
                             shaderMaterial.uniforms[x].value = val;
-                        })
+                        });
                     }
 
                     if (config.type === AttrType.Color) {
                         gui.addColor(params, x).onFinishChange((val: string) => {
-                            shaderMaterial.uniforms[x].value = new THREE.Color(val)
-                        })
+                            shaderMaterial.uniforms[x].value = new THREE.Color(val);
+                        });
                     }
                 }
-            })
-        })
+            });
+        });
 
+        const plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1, 2048, 2048), shaderMaterial);
 
-        const plane = new THREE.Mesh(
-            new THREE.PlaneBufferGeometry(1, 1, 2048, 2048),
-            shaderMaterial,
-        );
-
-        plane.rotation.x = - Math.PI / 2;
-        scene.add(plane)
-
+        plane.rotation.x = -Math.PI / 2;
+        scene.add(plane);
 
         const renderer = initRenderer(sizes.width, sizes.height);
         dom.appendChild(renderer.domElement);
@@ -126,8 +120,7 @@ const init = () => {
         controls.enableDamping = true;
 
         const helper = new THREE.AxesHelper(5);
-        scene.add(helper)
-
+        scene.add(helper);
 
         const clock = new THREE.Clock();
         const animate = () => {
@@ -135,14 +128,14 @@ const init = () => {
             shaderMaterial.uniforms.uTime.value = elapsedTime;
             controls.update();
             renderer.render(scene, camera);
-            requestAnimationFrame(animate)
-        }
+            requestAnimationFrame(animate);
+        };
         animate();
     }
-}
+};
 
 onMounted(() => {
     init();
-})
+});
 </script>
 <style lang="less" scoped></style>

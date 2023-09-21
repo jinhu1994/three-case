@@ -17,8 +17,8 @@ import { getSize, initRenderer } from '@/utils/three';
 import { getStaticResourceUrl } from '@/utils/common';
 import Fireworks from './fireworks';
 
-const fireworksEle = ref<HTMLElement | null>(null)
-const percent = ref(0)
+const fireworksEle = ref<HTMLElement | null>(null);
+const percent = ref(0);
 //  创建的烟花集合
 const fireworksArr = ref<Fireworks[]>([]);
 
@@ -29,7 +29,7 @@ const init = () => {
         const scene = new THREE.Scene();
 
         const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-        camera.position.set(-48, 20, 8)
+        camera.position.set(-48, 20, 8);
 
         const event = {
             onLoad: function () {
@@ -44,11 +44,7 @@ const init = () => {
         };
 
         // 设置纹理加载器
-        const loadingmanager = new THREE.LoadingManager(
-            event.onLoad,
-            event.onProgress,
-            event.onError
-        );
+        const loadingmanager = new THREE.LoadingManager(event.onLoad, event.onProgress, event.onError);
 
         // 加载环境贴图
         const rgbeloader = new RGBELoader(loadingmanager);
@@ -61,7 +57,7 @@ const init = () => {
         // 加载gltf模型
         const glftLoader = new GLTFLoader(loadingmanager);
         glftLoader.loadAsync(getStaticResourceUrl('newyears_min.glb', '/src/assets/model/')).then((glft) => {
-            scene.add(glft.scene)
+            scene.add(glft.scene);
 
             // 创建水面
             const waterGeometry = new THREE.PlaneBufferGeometry(100, 100);
@@ -73,8 +69,7 @@ const init = () => {
             water.position.y = 0.5;
             water.rotation.x = -Math.PI / 2;
             scene.add(water);
-
-        })
+        });
 
         const renderer = initRenderer(sizes.width, sizes.height);
         renderer.outputEncoding = THREE.sRGBEncoding;
@@ -94,10 +89,10 @@ const init = () => {
                     scene.remove(item.fireWorks);
                     fireworksArr.value.splice(index, 1);
                 }
-            })
+            });
             renderer.render(scene, camera);
-            requestAnimationFrame(animate)
-        }
+            requestAnimationFrame(animate);
+        };
 
         animate();
 
@@ -117,22 +112,25 @@ const init = () => {
                 Math.random() * 30 - 15,
             );
             const pointSize = 20 + Math.floor(Math.random() * 9);
-            const firework = new Fireworks(new THREE.Color(color), toPosition, new THREE.Vector3(0, 1, 1), pointSize, scene);
+            const firework = new Fireworks(
+                new THREE.Color(color),
+                toPosition,
+                new THREE.Vector3(0, 1, 1),
+                pointSize,
+                scene,
+            );
             firework.addScene(scene);
             fireworksArr.value.push(firework);
-        }
+        };
 
         window.addEventListener('click', () => {
             createFireWorks();
-        })
-
-
+        });
     }
-}
+};
 
 onMounted(() => {
     init();
-})
-
+});
 </script>
 <style lang="less" scoped></style>

@@ -30,9 +30,7 @@
             top: 50%;
             transform: translate(-50%, -50%);
             color: rgb(20, 129, 202);
-            text-shadow: 0 0 10px rgb(20, 129, 202),
-                0 0 30px rgb(20, 129, 202),
-                0 0 60px rgb(20, 129, 202),
+            text-shadow: 0 0 10px rgb(20, 129, 202), 0 0 30px rgb(20, 129, 202), 0 0 60px rgb(20, 129, 202),
                 0 0 100px rgb(20, 129, 202);
             font-size: 18px;
             z-index: 1;
@@ -67,7 +65,6 @@
             height: 150px;
             background-image: linear-gradient(180deg, rgb(22, 121, 252), transparent 80%);
             border-radius: 75px 0 0 75px;
-
         }
 
         .ring::after {
@@ -78,14 +75,9 @@
             width: 15px;
             height: 15px;
             background-color: rgb(40, 124, 202);
-            box-shadow: 0 0 5px rgb(40, 151, 202),
-                0 0 10px rgb(40, 124, 202),
-                0 0 20px rgb(40, 124, 202),
-                0 0 30px rgb(40, 124, 202),
-                0 0 40px rgb(40, 124, 202),
-                0 0 50px rgb(40, 124, 202),
-                0 0 60px rgb(40, 124, 202),
-                0 0 60px rgb(40, 124, 202);
+            box-shadow: 0 0 5px rgb(40, 151, 202), 0 0 10px rgb(40, 124, 202), 0 0 20px rgb(40, 124, 202),
+                0 0 30px rgb(40, 124, 202), 0 0 40px rgb(40, 124, 202), 0 0 50px rgb(40, 124, 202),
+                0 0 60px rgb(40, 124, 202), 0 0 60px rgb(40, 124, 202);
             border-radius: 50%;
             z-index: 1;
         }

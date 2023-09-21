@@ -62,19 +62,19 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'basic',
                 component: () => import('@/views/shader/basic/index.vue'),
-                meta: { title: '初始着色器' }
+                meta: { title: '初始着色器' },
             },
             {
                 path: 'lantern',
                 component: () => import('@/views/shader/lantern/index.vue'),
-                meta: { title: '孔明灯' }
+                meta: { title: '孔明灯' },
             },
             {
                 path: 'cloud',
                 component: () => import('@/views/shader/cloud/index.vue'),
-                meta: { title: '烟雾水云' }
-            }
-        ]
+                meta: { title: '烟雾水云' },
+            },
+        ],
     },
     {
         path: '/case',
@@ -83,9 +83,9 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'fireworks',
                 component: () => import('@/views/case/fireworks/index.vue'),
-                meta: { title: '烟花' }
-            }
-        ]
+                meta: { title: '烟花' },
+            },
+        ],
     },
     {
         path: '/shaderMaterial',
@@ -94,9 +94,9 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'process',
                 component: () => import('@/views/materialProcess/process/index.vue'),
-                meta: { title: '材质加工' }
-            }
-        ]
+                meta: { title: '材质加工' },
+            },
+        ],
     },
     {
         path: '/effect',
@@ -105,9 +105,25 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'shaderEffect',
                 component: () => import('@/views/effect/shaderEffect/index.vue'),
-                meta: { title: 'shaderPass' }
-            }
-        ]
+                meta: { title: 'shaderPass 示例' },
+            },
+        ],
+    },
+    {
+        path: '/cssRender',
+        meta: { title: 'CSS渲染器' },
+        children: [
+            {
+                path: 'CSS2D',
+                component: () => import('@/views/cssRender/2d.vue'),
+                meta: { title: 'CSS2D渲染器示例' },
+            },
+            {
+                path: 'CSS3D',
+                component: () => import('@/views/cssRender/3d.vue'),
+                meta: { title: 'CSS3D渲染器示例' },
+            },
+        ],
     },
 ];
 
