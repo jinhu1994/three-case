@@ -7,6 +7,7 @@ import { onMounted, ref } from 'vue';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { getSize, initRenderer } from '@/utils/three';
+import { getStaticResourceUrl } from '@/utils/common';
 const pointBasic = ref<HTMLElement | null>(null);
 
 const init = () => {
@@ -20,7 +21,7 @@ const init = () => {
         scene.add(camera);
 
         const textureLoader = new THREE.TextureLoader();
-        const texture = textureLoader.load('./assets/images/point/particles/1.png');
+        const texture = textureLoader.load(getStaticResourceUrl('1.png', '/src/assets/images/point/particles/'));
 
         const sphereGeometry = new THREE.SphereBufferGeometry(3, 30, 30);
         const pointMaterial = new THREE.PointsMaterial({

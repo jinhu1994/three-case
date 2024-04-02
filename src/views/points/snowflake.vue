@@ -10,6 +10,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { getSize, initRenderer } from '@/utils/three';
 import logo from '@/components/logo.vue';
+import { getStaticResourceUrl } from '@/utils/common';
 const snowflake = ref<HTMLElement | null>(null);
 
 const createPoints = (textureName: string, size = 0.5, count = 5000) => {
@@ -27,7 +28,7 @@ const createPoints = (textureName: string, size = 0.5, count = 5000) => {
     particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load(`./assets/images/point/particles/${textureName}.png`);
+    const texture = textureLoader.load(getStaticResourceUrl(`${textureName}.png`, '/src/assets/images/point/particles/'));
 
     const pointMaterial = new THREE.PointsMaterial({
         size: size, // 点材质的大小

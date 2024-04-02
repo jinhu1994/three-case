@@ -31,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('@/views/points/galaxy.vue'),
                 meta: { title: '星系' },
             },
+            {
+                path: 'glb',
+                component: () => import('@/views/points/loadGlbModel.vue'),
+                meta: { title: '加载GLB模型' },
+            },
         ],
     },
     {
@@ -77,19 +82,8 @@ const routes: Array<RouteRecordRaw> = [
         ],
     },
     {
-        path: '/case',
-        meta: { title: '综合案例' },
-        children: [
-            {
-                path: 'fireworks',
-                component: () => import('@/views/case/fireworks/index.vue'),
-                meta: { title: '烟花' },
-            },
-        ],
-    },
-    {
         path: '/shaderMaterial',
-        meta: { title: '着色器加工材质' },
+        meta: { title: '着色器加工材质：Material.onBeforeCompile的用法' },
         children: [
             {
                 path: 'process',
@@ -122,6 +116,22 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'CSS3D',
                 component: () => import('@/views/cssRender/3d.vue'),
                 meta: { title: 'CSS3D渲染器示例' },
+            },
+        ],
+    },
+    {
+        path: '/case',
+        meta: { title: '综合案例' },
+        children: [
+            {
+                path: 'fireworks',
+                component: () => import('@/views/case/fireworks/index.vue'),
+                meta: { title: '烟花' },
+            },
+            {
+                path: 'panoramic',
+                component: () => import('@/views/case/panoramic/index.vue'),
+                meta: { title: '全景看房' },
             },
         ],
     },

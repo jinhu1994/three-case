@@ -7,6 +7,7 @@ import { onMounted, ref } from 'vue';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { getSize, initRenderer } from '@/utils/three';
+import { getStaticResourceUrl } from '@/utils/common';
 const particles = ref<HTMLElement | null>(null);
 
 const init = () => {
@@ -33,7 +34,7 @@ const init = () => {
         particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
         const textureLoader = new THREE.TextureLoader();
-        const texture = textureLoader.load('./assets/images/point/particles/1.png');
+        const texture = textureLoader.load(getStaticResourceUrl('1.png', '/src/assets/images/point/particles/'));
 
         const pointMaterial = new THREE.PointsMaterial({
             size: 0.25, // 点材质的大小

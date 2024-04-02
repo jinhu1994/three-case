@@ -16,8 +16,8 @@ import * as THREE from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 import { CSS3DObject, CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
 import * as TWEEN from '@tweenjs/tween.js';
-import { getSize, initRenderer } from '@/utils/three';
-import { TableItem, table } from './3dData';
+import { getSize } from '@/utils/three';
+import { table } from './3dData';
 
 type Target = {
     table: THREE.Object3D[];
@@ -157,6 +157,7 @@ const init = () => {
                         Math.random() * duration + duration,
                     )
                     .easing(TWEEN.Easing.Exponential.InOut)
+                    .onUpdate()
                     .start();
 
                 new TWEEN.Tween(object.rotation)
